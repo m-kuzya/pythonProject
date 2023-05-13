@@ -6,6 +6,7 @@ from auth.database import User
 from auth.manager import get_user_manager
 from auth.schemas import UserRead, UserCreate
 
+
 app = FastAPI(
     title="Test auth"
 )
@@ -28,12 +29,23 @@ app.include_router(
 )
 
 current_user = fastapi_users.current_user()
+current_superuser = fastapi_users.current_user(active=True, superuser=True)
+
+
+@app.get("/superuser-route")
+def protected_route(user: User = Depends(current_superuser)):
+    return f"Круто, ты админ, обычным юзерам сюда ходу нет"
+
 
 @app.get("/protected-route")
 def protected_route(user: User = Depends(current_user)):
-    return f"Привет, {user.username}"
+    return f"Привет, {user.username}, ты авторизован, у гостей сюда нет входа"
 
 
 @app.get("/unprotected-route")
 def unprotected_route():
-    return f"Доступ запрещен"
+    return "Привет добряк, с авторизацией аль без нее"
+
+@app.get("/")
+def read_root():
+    return "Ура, запустилось"

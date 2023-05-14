@@ -1,3 +1,4 @@
+from api.base import api_router
 from fastapi_users import FastAPIUsers
 from fastapi import FastAPI, Depends
 
@@ -5,11 +6,20 @@ from auth.auth import auth_backend
 from auth.database import User
 from auth.manager import get_user_manager
 from auth.schemas import UserRead, UserCreate
+from webapp.base import api_router as web_app_router
 
 
-app = FastAPI(
-    title="Test auth"
-)
+def include_router(app):
+    app.include_router(api_router)
+    app.include_router(web_app_router)
+
+def start_application():
+    app = FastAPI(title="Some Titile", version="Some Version")
+    include_router(app)
+    return app
+
+
+app = start_application()
 
 fastapi_users = FastAPIUsers[User, int](
     get_user_manager,

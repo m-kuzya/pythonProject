@@ -9,12 +9,12 @@ templates = Jinja2Templates(directory="templates")
 router = APIRouter(include_in_schema=False)
 
 
-@router.get("/login/")
+@router.get("/login")
 def login(request: Request):
     return templates.TemplateResponse("login/login.html", {"request": request})
 
 
-@router.post("/login/")
+@router.post("/login")
 async def login(request: Request):
     form = LoginForm(request)
     await form.load_data()

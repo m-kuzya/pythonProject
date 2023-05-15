@@ -16,12 +16,12 @@ templates = Jinja2Templates(directory="templates")
 router = APIRouter(include_in_schema=False)
 
 
-@router.get("/register/")
+@router.get("/register")
 def register(request: Request):
     return templates.TemplateResponse("register/register.html", {"request": request})
 
 
-@router.post("/register/")
+@router.post("/register")
 async def register(request: Request, db: Session = Depends(get_db)):
     form = UserCreateForm(request)
     await form.load_data()

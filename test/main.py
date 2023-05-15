@@ -55,7 +55,3 @@ def protected_route(user: User = Depends(current_user)):
 @app.get("/unprotected-route")
 def unprotected_route():
     return "Привет добряк, с авторизацией аль без нее"
-
-@app.get("/")
-def read_root():
-    return "Ура, запустилось"

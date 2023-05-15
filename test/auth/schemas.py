@@ -1,20 +1,18 @@
-from fastapi_users import schemas
+from pydantic import BaseModel
+from pydantic import EmailStr
 
 
-class UserRead(schemas.BaseUser[int]):
-    id: int
-    email: str
+# properties required during user creation
+class UserCreate(BaseModel):
     username: str
-    role_id: int
-    is_active: bool = True
-    is_superuser: bool = False
-    is_verified: bool = False
-
-    class Config:
-        orm_mode = True
-
-
-class UserCreate(schemas.BaseUserCreate):
-    username: str
-    email: str
+    email: EmailStr
     password: str
+
+
+class ShowUser(BaseModel):
+    username: str
+    email: EmailStr
+    is_active: bool
+
+    class Config:  # to convert non dict obj to json
+        orm_mode = True

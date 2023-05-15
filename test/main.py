@@ -5,7 +5,7 @@ from fastapi import FastAPI, Depends
 from auth.auth import auth_backend
 from auth.database import User
 from auth.manager import get_user_manager
-from auth.schemas import UserRead, UserCreate
+from auth.schemas import ShowUser, UserCreate
 from webapp.base import api_router as web_app_router
 
 
@@ -33,7 +33,7 @@ app.include_router(
 )
 
 app.include_router(
-    fastapi_users.get_register_router(UserRead, UserCreate),
+    fastapi_users.get_register_router(ShowUser, UserCreate),
     prefix="/auth",
     tags=["auth"],
 )

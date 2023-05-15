@@ -1,10 +1,6 @@
-from register.users import create_new_user
+from auth.manager import create as create_new_user
 from auth.database import get_user_db as get_db
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import Request
-from fastapi import responses
-from fastapi import status
+from fastapi import APIRouter, Depends, Request, responses, status
 from fastapi.templating import Jinja2Templates
 from auth.schemas import UserCreate
 from sqlalchemy.exc import IntegrityError
@@ -22,7 +18,7 @@ def register(request: Request):
 
 
 @router.post("/register")
-async def register(request: Request, db: Session = Depends(get_db)):
+async def register(request: Request):
     form = UserCreateForm(request)
     await form.load_data()
     if await form.is_valid():
@@ -30,7 +26,8 @@ async def register(request: Request, db: Session = Depends(get_db)):
             username=form.username, email=form.email, password=form.password
         )
         try:
-            user = create_new_user(user=user, db=db)
+            user = create_new_user
+            print(responses)
             return responses.RedirectResponse(
                 "/?msg=Successfully-Registered", status_code=status.HTTP_302_FOUND
             )  # default is post request, to use get request added status code 302

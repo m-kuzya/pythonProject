@@ -1,4 +1,5 @@
 from routes.hashing import Hasher
+from datetime import datetime
 from auth.database import User
 from auth.schemas import UserCreate
 from sqlalchemy.orm import Session
@@ -13,6 +14,7 @@ def create_new_user(user: UserCreate, db: Session):
         is_verified=false,
         is_superuser=False,
         role_id=1,
+        registered_at=datetime.utcnow,
     )
     db.add(user)
     db.commit()

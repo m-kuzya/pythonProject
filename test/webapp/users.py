@@ -6,6 +6,7 @@ from auth.schemas import UserCreate
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from webapp.users_form import UserCreateForm
+import requests
 
 
 templates = Jinja2Templates(directory="templates")
@@ -27,7 +28,6 @@ async def register(request: Request):
         )
         try:
             user = create_new_user
-            print(responses)
             return responses.RedirectResponse(
                 "/?msg=Successfully-Registered", status_code=status.HTTP_302_FOUND
             )  # default is post request, to use get request added status code 302

@@ -9,9 +9,9 @@ def create_new_user(user: UserCreate, db: Session):
     user = User(
         username=user.username,
         email=user.email,
-        password=Hasher.get_password_hash(user.password),
+        hashed_password=Hasher.get_password_hash(user.password),
         is_active=True,
-        is_verified=false,
+        is_verified=False,
         is_superuser=False,
         role_id=1,
         registered_at=datetime.utcnow,

@@ -14,7 +14,7 @@ def include_router(app):
     app.include_router(web_app_router)
 
 def start_application():
-    app = FastAPI(title="Some Titile", version="Some Version")
+    app = FastAPI(title="Some Titile", version="Some Version", openapi_url="/auth/openapi.json")
     include_router(app)
     return app
 

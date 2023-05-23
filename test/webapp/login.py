@@ -1,7 +1,8 @@
 from fastapi import APIRouter
-from fastapi import Request, Form
+from fastapi import Request, Form, Response
 from fastapi.templating import Jinja2Templates
 import requests
+from auth.auth import get_jwt_strategy, cookie_transport
 import json
 
 
@@ -16,13 +17,13 @@ def login(request: Request):
 
 @router.post("/login")
 def user_login(username=Form(), password=Form()):
-    url = 'http://127.0.0.1:8000/auth/login'
-    data = {
-        'username': username,
-        'password': password,
+    data = {"username": username, "password": password}
+    url = "http://127.0.0.1:8000/auth/login"
+    headers = {
+        'accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
     }
-    header = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    }
-    response = requests.post(url=url, headers=header, data=data)
-    return response
+    r = requests.Session()
+    r.post(url=url, headers=headers, data=data)
+    mycookies = r.cookies
+    return mycookies

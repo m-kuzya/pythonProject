@@ -1,3 +1,5 @@
+from flask import make_response, render_template, request
+
 from api.base import api_router
 from fastapi_users import FastAPIUsers
 from fastapi import FastAPI, Depends
@@ -49,9 +51,10 @@ def protected_route(user: User = Depends(current_superuser)):
 
 @app.get("/protected-route")
 def protected_route(user: User = Depends(current_user)):
-    return f"Привет, {user.username}, ты авторизован, у гостей сюда нет входа"
+    return f"Привет, {user.email}, ты авторизован, у гостей сюда нет входа"
 
 
 @app.get("/unprotected-route")
 def unprotected_route():
     return "Привет добряк, с авторизацией аль без нее"
+

@@ -14,8 +14,8 @@ def register(request: Request):
 
 
 @router.post("/register")
-def register(username=Form(), email=Form(), password=Form()):
-    data = {"username": username, "email": email, "password": password}
+def register(email=Form(), password=Form()):
+    data = {"email": email, "password": password}
     url = "http://127.0.0.1:8000/auth/register"
     response = requests.post(url, data=json.dumps(data)).json()
     return response

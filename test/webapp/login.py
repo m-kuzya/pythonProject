@@ -26,4 +26,4 @@ def user_login(username=Form(), password=Form()):
     r = requests.Session()
     r.post(url=url, headers=headers, data=data)
     mycookies = r.cookies
-    return mycookies
+    print(mycookies)

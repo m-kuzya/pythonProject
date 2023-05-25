@@ -2,7 +2,7 @@ from typing import Optional
 
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, IntegerIDMixin, exceptions, models, schemas
-
+from auth.schemas import UserCreate
 from auth.database import User, get_user_db
 
 SECRET = "SECRET"
@@ -19,7 +19,7 @@ async def on_after_register(self, user: User, request: Optional[Request] = None)
 
 async def create(
     self,
-    user_create: schemas.UC,
+    user_create: UserCreate,
     safe: bool = False,
     request: Optional[Request] = None,
 ) -> models.UP:
@@ -36,7 +36,6 @@ async def create(
     )
     password = user_dict.pop("password")
     user_dict["hashed_password"] = self.password_helper.hash(password)
-    user_dict["role_id"] = 1
 
     created_user = await self.user_db.create(user_dict)
 

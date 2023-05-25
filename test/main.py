@@ -1,6 +1,3 @@
-from flask import make_response, render_template, request
-
-from api.base import api_router
 from fastapi_users import FastAPIUsers
 from fastapi import FastAPI, Depends
 
@@ -12,7 +9,6 @@ from webapp.base import api_router as web_app_router
 
 
 def include_router(app):
-    app.include_router(api_router)
     app.include_router(web_app_router)
 
 def start_application():

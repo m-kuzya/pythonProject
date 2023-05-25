@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Request, Form
 from fastapi.templating import Jinja2Templates
+from config import register_url
 import requests
 import json
 
@@ -16,6 +17,6 @@ def register(request: Request):
 @router.post("/register")
 def register(email=Form(), password=Form()):
     data = {"email": email, "password": password}
-    url = "http://127.0.0.1:8000/auth/register"
+    url = register_url
     response = requests.post(url, data=json.dumps(data)).json()
     return response
